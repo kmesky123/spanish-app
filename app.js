@@ -216,18 +216,35 @@ function renderLessonDetail(lessonId) {
 
 // ---------- Flashcards ----------
 
+function speakSpanish(text, rate) {
+  if (!("speechSynthesis" in window)) return;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "es-ES";
+  utterance.rate = rate;
+  window.speechSynthesis.speak(utterance);
+}
+
 function renderFlashcards(lessonId) {
   const lesson = getLesson(lessonId);
-  const deck = shuffle(lesson.words);
+  let deck = [...lesson.words];
   let index = 0;
   let flipped = false;
+  const seen = new Set();
+  const speechSupported = "speechSynthesis" in window;
 
   const wrap = el(`
     <div>
       <button class="back-link" id="back-btn">&larr; Back to ${lesson.title}</button>
       <h1>${lesson.icon} ${lesson.title} — Flashcards</h1>
       <div class="flash-wrap">
-        <div class="flash-progress" id="flash-progress"></div>
+        <div class="flash-top-row">
+          <div class="flash-progress" id="flash-progress"></div>
+          <div class="flash-deck-controls">
+            <button class="btn-icon" id="shuffle-btn" title="Shuffle the deck">🔀 Shuffle</button>
+            <button class="btn-icon" id="reset-btn" title="Restore original order">↺ Reset</button>
+          </div>
+        </div>
         <div class="flashcard" id="flashcard">
           <div class="flashcard-inner">
             <div class="flashcard-face flashcard-front">
@@ -240,9 +257,13 @@ function renderFlashcards(lessonId) {
             </div>
           </div>
         </div>
-        <div class="flash-controls">
-          <button class="btn flash-unknown-btn" id="still-learning">Still learning</button>
-          <button class="btn flash-known-btn" id="knew-it">I knew it!</button>
+        <div class="flash-audio-row">
+          <button class="btn-icon" id="hear-btn" ${speechSupported ? "" : "disabled"} title="Hear it">🔊 Hear it</button>
+          <button class="btn-icon" id="hear-slow-btn" ${speechSupported ? "" : "disabled"} title="Hear it slowly">🐢 Slow</button>
+        </div>
+        <div class="flash-nav-row">
+          <button class="btn btn-outline" id="back-card-btn">&larr; Back</button>
+          <button class="btn btn-primary" id="next-card-btn">Next &rarr;</button>
         </div>
       </div>
     </div>
@@ -256,22 +277,14 @@ function renderFlashcards(lessonId) {
   const backPron = wrap.querySelector("#back-pron");
   const progressLabel = wrap.querySelector("#flash-progress");
 
-  function showCard() {
-    if (index >= deck.length) {
+  function markSeen() {
+    seen.add(index);
+    if (seen.size === deck.length) {
       updateLessonProgress(lessonId, { flashcardsPracticed: true });
-      wrap.querySelector(".flash-wrap").innerHTML = `
-        <div class="quiz-result">
-          <p>🎉 You've gone through all ${deck.length} cards for this lesson.</p>
-          <div class="cta-row" style="justify-content:center">
-            <button class="btn btn-primary" id="restart-flash">Practice Again</button>
-            <button class="btn btn-secondary" id="go-quiz">Take the Quiz</button>
-          </div>
-        </div>
-      `;
-      wrap.querySelector("#restart-flash").addEventListener("click", () => setView("flashcards", lessonId));
-      wrap.querySelector("#go-quiz").addEventListener("click", () => setView("quiz", lessonId));
-      return;
     }
+  }
+
+  function showCard() {
     flipped = false;
     card.classList.remove("flipped");
     const w = deck[index];
@@ -279,6 +292,7 @@ function renderFlashcards(lessonId) {
     backText.textContent = w.es;
     backPron.textContent = w.pron;
     progressLabel.textContent = `Card ${index + 1} of ${deck.length}`;
+    markSeen();
   }
 
   card.addEventListener("click", () => {
@@ -286,13 +300,34 @@ function renderFlashcards(lessonId) {
     card.classList.toggle("flipped", flipped);
   });
 
-  function next() {
-    index++;
+  wrap.querySelector("#next-card-btn").addEventListener("click", () => {
+    index = (index + 1) % deck.length;
     showCard();
-  }
+  });
 
-  wrap.querySelector("#knew-it").addEventListener("click", next);
-  wrap.querySelector("#still-learning").addEventListener("click", next);
+  wrap.querySelector("#back-card-btn").addEventListener("click", () => {
+    index = (index - 1 + deck.length) % deck.length;
+    showCard();
+  });
+
+  wrap.querySelector("#shuffle-btn").addEventListener("click", () => {
+    deck = shuffle(lesson.words);
+    index = 0;
+    seen.clear();
+    showCard();
+  });
+
+  wrap.querySelector("#reset-btn").addEventListener("click", () => {
+    deck = [...lesson.words];
+    index = 0;
+    seen.clear();
+    showCard();
+  });
+
+  if (speechSupported) {
+    wrap.querySelector("#hear-btn").addEventListener("click", () => speakSpanish(deck[index].es, 0.95));
+    wrap.querySelector("#hear-slow-btn").addEventListener("click", () => speakSpanish(deck[index].es, 0.5));
+  }
 
   showCard();
   return wrap;

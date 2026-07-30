@@ -304,12 +304,46 @@ main#app {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;
+  gap: 14px;
+}
+
+.flash-top-row {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .flash-progress {
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.flash-deck-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-icon {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-icon:hover {
+  border-color: var(--red);
+}
+
+.btn-icon:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .flashcard {
@@ -373,19 +407,17 @@ main#app {
   font-size: 0.85rem;
 }
 
-.flash-controls {
+.flash-audio-row {
   display: flex;
+  gap: 10px;
+}
+
+.flash-nav-row {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  justify-content: space-between;
   gap: 12px;
-}
-
-.flash-known-btn {
-  background: var(--green);
-  color: white;
-}
-
-.flash-unknown-btn {
-  background: #b0392b;
-  color: white;
 }
 
 /* ---------- Quiz ---------- */
