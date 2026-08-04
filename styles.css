@@ -1,23 +1,20 @@
 /* ============================================================
    ¡Habla! — "La Pizarra" (The Chalkboard)
-   An adult study-room chalkboard: slate ground, hand-chalked
-   headlines, precise printed data, wood-and-brass framing.
+   An adult study-room chalkboard: slate ground, precise
+   architectural headlines, clean printed data, wood-and-brass
+   framing. Headlines were hand-chalked script (Kalam) through the
+   first two passes; that was hard to read, so display type is now
+   a bold, legible grotesk (Archivo) instead — same chalkboard
+   world, same colors and layout, just a readable "chalked in
+   block letters" voice rather than a cursive one.
    ============================================================ */
 
 @font-face {
-  font-family: "Kalam";
+  font-family: "Archivo";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700 800;
   font-display: swap;
-  src: url("fonts/kalam-400.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Kalam";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("fonts/kalam-700.woff2") format("woff2");
+  src: url("fonts/archivo-variable.woff2") format("woff2");
 }
 
 :root {
@@ -53,7 +50,7 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
-  --font-display: "Kalam", "Segoe Script", cursive;
+  --font-display: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
@@ -93,7 +90,8 @@ body {
 
 h1, h2, h3 {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.015em;
   margin: 0;
   color: var(--chalk);
 }
@@ -142,7 +140,8 @@ h1, h2, h3 {
   align-items: center;
   gap: 10px;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.01em;
   font-size: 1.5rem;
   color: var(--chalk);
 }
@@ -375,7 +374,7 @@ main#app {
 }
 
 .step h3 {
-  font-size: 1.3rem;
+  font-size: 1.45rem;
   margin-bottom: 6px;
 }
 
@@ -459,7 +458,7 @@ main#app {
 }
 
 .lesson-card h3 {
-  font-size: 1.15rem;
+  font-size: 1.3rem;
   margin: 14px 0 5px;
   font-weight: 700;
 }
@@ -567,8 +566,9 @@ main#app {
 .word-table th {
   color: var(--chalk-ochre);
   font-family: var(--font-display);
-  font-size: 0.95rem;
+  font-size: 1.02rem;
   font-weight: 700;
+  letter-spacing: -0.005em;
   border-bottom: 1.5px solid var(--frame-light);
 }
 
@@ -711,6 +711,7 @@ main#app {
   font-family: var(--font-display);
   font-size: 2rem;
   font-weight: 700;
+  letter-spacing: -0.01em;
   color: var(--chalk);
 }
 
@@ -877,7 +878,8 @@ main#app {
 .quiz-result .score {
   font-family: var(--font-display);
   font-size: 3rem;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.015em;
   color: var(--chalk-ochre);
   margin: 12px 0;
 }
@@ -921,8 +923,9 @@ main#app {
 .progress-table th {
   color: var(--chalk-ochre);
   font-family: var(--font-display);
-  font-size: 0.95rem;
+  font-size: 1.02rem;
   font-weight: 700;
+  letter-spacing: -0.005em;
   border-bottom: 1.5px solid var(--frame-light);
 }
 
