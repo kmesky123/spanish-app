@@ -110,15 +110,10 @@ function renderHome() {
           A friendly, no-pressure way for English speakers to learn beginner Spanish.
           Work through short lessons, drill vocabulary with flashcards, then test yourself with a quiz.
         </p>
-        <div class="stat-row">
-          <div class="stat-box">
-            <div class="num">${lessonsStarted}/${totalLessons}</div>
-            <div class="label">Lessons started</div>
-          </div>
-          <div class="stat-box">
-            <div class="num">${avgScore}%</div>
-            <div class="label">Average quiz score</div>
-          </div>
+        <div class="chalk-ledger">
+          <span class="chalk-ledger-item"><strong>${lessonsStarted}/${totalLessons}</strong> lessons started</span>
+          <span class="chalk-ledger-divider" aria-hidden="true"></span>
+          <span class="chalk-ledger-item"><strong>${avgScore}%</strong> average quiz score</span>
         </div>
         <div class="cta-row">
           <button class="btn btn-primary" id="start-learning">Start Learning</button>
@@ -127,20 +122,25 @@ function renderHome() {
       </section>
 
       <h2 class="section-title">How it works</h2>
-      <div class="lesson-grid">
-        <div class="lesson-card">
-          <div class="icon">📖</div>
-          <h3>1. Study</h3>
+      <div class="step-flow">
+        <div class="step">
+          <div class="step-badge">1</div>
+          <svg class="icon-svg step-icon" aria-hidden="true"><use href="#icon-book"></use></svg>
+          <h3>Study</h3>
           <p>Read the vocabulary table with English meanings and simple pronunciation hints.</p>
         </div>
-        <div class="lesson-card">
-          <div class="icon">🃏</div>
-          <h3>2. Practice</h3>
+        <div class="step-connector" aria-hidden="true"></div>
+        <div class="step">
+          <div class="step-badge">2</div>
+          <svg class="icon-svg step-icon" aria-hidden="true"><use href="#icon-cards"></use></svg>
+          <h3>Practice</h3>
           <p>Flip through flashcards to test your recall in both directions.</p>
         </div>
-        <div class="lesson-card">
-          <div class="icon">✅</div>
-          <h3>3. Quiz</h3>
+        <div class="step-connector" aria-hidden="true"></div>
+        <div class="step">
+          <div class="step-badge">3</div>
+          <svg class="icon-svg step-icon" aria-hidden="true"><use href="#icon-check"></use></svg>
+          <h3>Quiz</h3>
           <p>Take a short multiple-choice quiz and track your best score.</p>
         </div>
       </div>
@@ -163,12 +163,16 @@ function renderLessonList() {
   const grid = wrap.querySelector("#lesson-grid");
   LESSONS.forEach((lesson) => {
     const prog = getLessonProgress(lesson.id);
+    const filledDots = Math.round(prog.bestScore / 10);
+    const dots = Array.from({ length: 10 }, (_, i) =>
+      `<span class="tally-dot${i < filledDots ? " filled" : ""}"></span>`
+    ).join("");
     const card = el(`
       <div class="lesson-card" data-id="${lesson.id}">
         <div class="icon">${lesson.icon}</div>
         <h3>${lesson.title}</h3>
         <p>${lesson.description}</p>
-        <div class="progress-bar"><div class="progress-bar-fill" style="width:${prog.bestScore}%"></div></div>
+        <div class="tally-row" role="img" aria-label="${prog.bestScore > 0 ? `Best score ${prog.bestScore} percent` : "Not started yet"}">${dots}</div>
         <div class="progress-label">${prog.bestScore > 0 ? `Best score: ${prog.bestScore}%` : "Not started yet"}</div>
       </div>
     `);
@@ -191,8 +195,8 @@ function renderLessonDetail(lessonId) {
         </div>
       </div>
       <div class="mode-row">
-        <button class="btn btn-primary" id="flashcards-btn">🃏 Practice Flashcards</button>
-        <button class="btn btn-secondary" id="quiz-btn">✅ Take Quiz</button>
+        <button class="btn btn-primary" id="flashcards-btn"><svg class="icon-svg" aria-hidden="true"><use href="#icon-cards"></use></svg>Practice Flashcards</button>
+        <button class="btn btn-secondary" id="quiz-btn"><svg class="icon-svg" aria-hidden="true"><use href="#icon-check"></use></svg>Take Quiz</button>
       </div>
       <table class="word-table">
         <thead>
@@ -241,8 +245,8 @@ function renderFlashcards(lessonId) {
         <div class="flash-top-row">
           <div class="flash-progress" id="flash-progress"></div>
           <div class="flash-deck-controls">
-            <button class="btn-icon" id="shuffle-btn" title="Shuffle the deck">🔀 Shuffle</button>
-            <button class="btn-icon" id="reset-btn" title="Restore original order">↺ Reset</button>
+            <button class="btn-icon" id="shuffle-btn" title="Shuffle the deck"><svg class="icon-svg" aria-hidden="true"><use href="#icon-shuffle"></use></svg>Shuffle</button>
+            <button class="btn-icon" id="reset-btn" title="Restore original order"><svg class="icon-svg" aria-hidden="true"><use href="#icon-reset"></use></svg>Reset</button>
           </div>
         </div>
         <div class="flashcard" id="flashcard">
@@ -258,8 +262,8 @@ function renderFlashcards(lessonId) {
           </div>
         </div>
         <div class="flash-audio-row">
-          <button class="btn-icon" id="hear-btn" ${speechSupported ? "" : "disabled"} title="Hear it">🔊 Hear it</button>
-          <button class="btn-icon" id="hear-slow-btn" ${speechSupported ? "" : "disabled"} title="Hear it slowly">🐢 Slow</button>
+          <button class="btn-icon" id="hear-btn" ${speechSupported ? "" : "disabled"} title="Hear it"><svg class="icon-svg" aria-hidden="true"><use href="#icon-speaker"></use></svg>Hear it</button>
+          <button class="btn-icon" id="hear-slow-btn" ${speechSupported ? "" : "disabled"} title="Hear it slowly"><svg class="icon-svg" aria-hidden="true"><use href="#icon-slow"></use></svg>Slow</button>
         </div>
         <div class="flash-nav-row">
           <button class="btn btn-outline" id="back-card-btn">&larr; Back</button>
@@ -381,7 +385,7 @@ function renderQuiz(lessonId) {
         <div class="quiz-result">
           <p>You scored</p>
           <div class="score">${correctCount}/${questions.length} (${scorePct}%)</div>
-          <p>${isNewBest ? "🎉 New best score!" : "Keep practicing to beat your best score."}</p>
+          <p class="${isNewBest ? "new-best" : ""}">${isNewBest ? "New best score!" : "Keep practicing to beat your best score."}</p>
           <div class="cta-row" style="justify-content:center">
             <button class="btn btn-primary" id="retry-quiz">Try Again</button>
             <button class="btn btn-secondary" id="back-lessons">Choose Another Lesson</button>
@@ -400,7 +404,13 @@ function renderQuiz(lessonId) {
         <h3>What does <em>"${q.es}"</em> mean?</h3>
         <div class="quiz-options">
           ${q.options
-            .map((opt, i) => `<button class="quiz-option" data-opt="${encodeURIComponent(opt)}">${opt}</button>`)
+            .map(
+              (opt, i) => `<button class="quiz-option" data-opt="${encodeURIComponent(opt)}">
+                <span class="quiz-option-text">${opt}</span>
+                <svg class="mark-svg mark-circle" aria-hidden="true"><use href="#icon-mark-circle"></use></svg>
+                <svg class="mark-svg mark-x" aria-hidden="true"><use href="#icon-mark-x"></use></svg>
+              </button>`
+            )
             .join("")}
         </div>
         <div class="quiz-next-hint" id="next-hint"></div>
@@ -452,7 +462,7 @@ function renderProgressPage() {
       <h1>Your Progress</h1>
       ${
         anyActivity
-          ? `<table class="progress-table">
+          ? `<div class="table-scroll"><table class="progress-table">
               <thead>
                 <tr><th>Lesson</th><th>Best Quiz Score</th><th>Attempts</th><th>Flashcards</th></tr>
               </thead>
@@ -464,13 +474,13 @@ function renderProgressPage() {
                     <td>${lesson.icon} ${lesson.title}</td>
                     <td>${p.bestScore > 0 ? p.bestScore + "%" : "—"}</td>
                     <td>${p.attempts || 0}</td>
-                    <td>${p.flashcardsPracticed ? "✅ Practiced" : "—"}</td>
+                    <td>${p.flashcardsPracticed ? '<svg class="icon-svg icon-svg-sm" aria-hidden="true"><use href="#icon-check"></use></svg>Practiced' : "—"}</td>
                   </tr>
                 `
                   )
                   .join("")}
               </tbody>
-            </table>`
+            </table></div>`
           : `<div class="empty-state">
               <p>You haven't practiced any lessons yet.</p>
               <button class="btn btn-primary" id="go-lessons">Browse Lessons</button>
