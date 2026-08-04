@@ -1,6 +1,6 @@
 ---
 name: ¡Habla!
-description: An adult study-room chalkboard — slate ground, hand-chalked headlines, precise printed data.
+description: An adult study-room chalkboard — slate ground, bold architectural headlines, precise printed data.
 colors:
   ground: "#242b26"
   ground-deep: "#1c221d"
@@ -17,9 +17,9 @@ colors:
   chalk-sage: "#9ecb8c"
 typography:
   display:
-    fontFamily: "Kalam, Segoe Script, cursive"
-    fontWeight: 700
-    letterSpacing: normal
+    fontFamily: "Archivo, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif"
+    fontWeight: 800
+    letterSpacing: "-0.015em"
   body:
     fontFamily: "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif"
     fontWeight: 400
@@ -51,13 +51,13 @@ components:
 
 **Creative North Star: "La Pizarra" (The Chalkboard)**
 
-¡Habla! is the board a serious adult learner works at, not another rounded-bubbly gamified app shell. The whole surface commits to one object: a well-used slate chalkboard in a study room, worked in chalk and framed in wood and brass. Hand-chalked display type (Kalam, self-hosted) carries headlines and anything the "teacher" would write by hand; a plain workhorse system sans carries body copy and data, the "printed" register the learner reads. Wood-and-brass framing (a 3–4px warm-toned border) marks structural objects — the header's base rule, the flashcard's edge — rather than acting as decoration. Progress is never a generic bar or stat tile: it's chalk tally-dots per lesson and an inline chalk-ledger sentence on the home screen. Quiz feedback is a hand-specified chalk circle or chalk X that draws itself onto the chosen answer, not a flat color fill.
+¡Habla! is the board a serious adult learner works at, not another rounded-bubbly gamified app shell. The whole surface commits to one object: a well-used slate chalkboard in a study room, framed in wood and brass. Bold, architectural display type (Archivo, self-hosted) carries headlines and titles — read as block letters chalked onto the board rather than cursive handwriting; a plain workhorse system sans carries body copy and data, the "printed" register the learner reads. (An earlier pass used a hand-chalked script face, Kalam, for display type; it read as decorative rather than legible, so it was replaced — noted here so it isn't reintroduced. The chalkboard world, palette, and layout are unchanged; only the display face's *character* changed, from cursive to block-letter.) Wood-and-brass framing (a 3–4px warm-toned border) marks structural objects — the header's base rule, the flashcard's edge — rather than acting as decoration. Progress is never a generic bar or stat tile: it's chalk tally-dots per lesson and an inline chalk-ledger sentence on the home screen. Quiz feedback is a hand-specified chalk circle or chalk X that draws itself onto the chosen answer, not a flat color fill.
 
 This direction was reached through Impeccable's grounded-direction roll (seed key `e370d7df`, assigned index 5 of 7 candidates derived from the audience's real self-study world: transit signage, the Leitner flashcard box, the pocket phrasebook, the passport-and-stamp system, the chalkboard, airmail correspondence, the vintage travel poster), then confirmed with the user before build.
 
 **Key Characteristics:**
 - Dark slate ground at all times — this is not a light/dark toggle, the ground *is* the chalkboard.
-- One deliberate display face (Kalam) carries all personality; body/data text stays plain and gets out of the way.
+- One deliberate display face (Archivo, bold/extrabold) carries all personality; body/data text stays plain and gets out of the way.
 - Every accent color is a literal chalk-pastel: ochre, rust, sage — never neon, never a saturated brand blue/red.
 - Rectangular, chalk-outlined buttons that fill solid on hover — never pill-shaped.
 - No glassmorphism, no gradients-as-decoration, no emoji standing in for icons.
@@ -92,17 +92,17 @@ Every accent reads as a stick of chalk against slate — muted, warm, never neon
 
 ## Typography
 
-**Display Font:** Kalam (self-hosted, weights 400/700), falling back to Segoe Script, cursive
+**Display Font:** Archivo (self-hosted variable font, weights 700–800), falling back to the system sans stack
 **Body Font:** -apple-system / Segoe UI / Roboto system stack
 
-**Character:** Kalam is a genuine hand-chalked marker face — it carries every headline, section title, button-adjacent emphasis, and the flashcard/quiz score display. The system sans stays deliberately plain: this is an Operate surface (a repeated-use study tool), and legible workhorse body text lets the one chalk voice stay distinctive instead of competing with a second styled face. (An earlier pass used Space Grotesk for body text; the project's own design detector flagged it as an overused AI-default face, and it was replaced with a system stack — noted here so it isn't reintroduced.)
+**Character:** Archivo is a bold, architectural grotesk — it carries every headline, section title, card/step title, button-adjacent emphasis, and the flashcard/quiz score display, at 700–800 weight with a touch of negative tracking (-0.01em to -0.015em) for a tight, confident, "chalked in block letters" voice. (The first pass used Kalam, a hand-chalked script face, for display type; the user found it hard to read, so it was replaced with Archivo — same chalkboard world, same colors and layout, but a legible block-letter voice instead of cursive. Noted here so script display type isn't reintroduced.) The system sans stays deliberately plain: this is an Operate surface (a repeated-use study tool), and legible workhorse body text lets the one display voice stay distinctive instead of competing with a second styled family. (A still-earlier pass used Space Grotesk for body text; the project's own design detector flagged it as an overused AI-default face, and it was replaced with a system stack — noted here so it isn't reintroduced either.)
 
 ### Hierarchy
-- **Display** (700, 3rem hero / 1.6rem section-title / 2rem lesson-header, line-height 1.1–1.35): page-level headlines and section titles. Normal letter-spacing — Kalam is a connected script; negative tracking breaks its letterforms.
-- **Headline** (700, 1.5rem, Kalam): quiz question text; `<em>` portions (the Spanish term being tested) render in chalk-ochre instead of italic.
-- **Title** (700, 1.15rem Kalam for lesson-card/step headings): component-level headings.
+- **Display** (800, 3rem hero / 1.6rem section-title / 2rem lesson-header, line-height 1.1–1.35, letter-spacing -0.015em): page-level headlines and section titles.
+- **Headline** (800, 1.5rem, letter-spacing -0.015em): quiz question text; `<em>` portions (the Spanish term being tested) render in chalk-ochre instead of italic.
+- **Title** (700–800, 1.3rem lesson-card / 1.45rem step-flow headings, letter-spacing -0.015em): component-level headings; sized up a step from the first Archivo pass so titles read clearly at a glance against the grotesk's tighter default proportions versus Kalam's wider script forms.
 - **Body** (400, 0.86–1rem, system sans, line-height 1.5–1.65, max-width 56ch on the hero paragraph): descriptions, vocabulary table cells, quiz options.
-- **Label** (600, 0.76–0.92rem, system sans): buttons, nav, progress labels, table headers (table headers use Kalam at 700 instead, to read as "chalked column headings").
+- **Label** (600, 0.76–0.92rem, system sans): buttons, nav, progress labels. Table headers use Archivo at 700, 1.02rem, letter-spacing -0.005em, to keep reading as "chalked column headings" while staying legible at small size.
 
 ## Layout
 
@@ -156,7 +156,7 @@ All icons are authored inline SVG (24×24, `stroke-width: 1.6`, round caps/joins
 - **Do** keep `--chalk-faint` for decoration only (dashed lines, corner brackets, disabled borders) — never for text.
 - **Do** use `pathLength="1"` on any future hand-drawn SVG mark so `stroke-dasharray`/`stroke-dashoffset` draw-in animations stay geometry-independent.
 - **Do** gate every `:hover` lift/tilt effect behind `(hover: hover) and (pointer: fine)`.
-- **Do** keep Kalam's letter-spacing at its default; do not apply the -0.02em to -0.04em tracking convention used on sans/serif display faces.
+- **Do** keep Archivo display text at -0.01em to -0.015em tracking (already applied via the global `h1, h2, h3` rule and the standalone display-text components) — enough to tighten a bold grotesk without hurting legibility.
 - **Do** author any new icon as a precise, geometry-specified line icon matching the existing 24×24 / 1.6 stroke-width system — never an emoji or a photorealistic/sketch-style illustration.
 
 ### Don't:
@@ -165,3 +165,4 @@ All icons are authored inline SVG (24×24, `stroke-width: 1.6`, round caps/joins
 - **Don't** reintroduce Space Grotesk, Inter, or another training-data-default sans as the body face without a specific reason; the current system stack was a deliberate detector-driven fix.
 - **Don't** render progress as a gradient/striped bar, a progress ring, or a big-number-plus-label stat tile — use the chalk tally-dot or chalk-ledger pattern established here.
 - **Don't** use glassmorphism (`backdrop-filter`, translucent glass panels) anywhere — this world was explicitly built without it, in contrast to the app's prior "premium glass flashcard" pass.
+- **Don't** reintroduce a cursive/script/handwritten display face (Kalam or otherwise) — the user found it hard to read and it was deliberately replaced with Archivo; the chalkboard identity now speaks through color, texture, and block-letter weight, not handwriting.
