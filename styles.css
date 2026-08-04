@@ -1,40 +1,97 @@
 :root {
-  --red: #c0392b;
-  --yellow: #f4c430;
-  --ink: #2b2320;
-  --paper: #fffaf2;
+  --ink: #18120f;
+  --ink-soft: #3d332c;
+  --muted: #857c72;
+  --paper: #faf8f5;
   --card: #ffffff;
-  --muted: #75695f;
-  --border: #ead9c4;
-  --green: #2e7d32;
-  --radius: 14px;
-  --shadow: 0 2px 10px rgba(43, 35, 32, 0.08);
+  --border: #e9e2d8;
+  --border-strong: #ddd0bd;
+
+  --red: #c1272d;
+  --red-hover: #a41f24;
+  --red-soft: #f8e6e3;
+
+  --yellow: #d9a441;
+  --yellow-hover: #c8933a;
+  --yellow-soft: #faf1de;
+
+  --green: #1f7a4d;
+  --green-soft: #e5f3ea;
+
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(24, 18, 15, 0.05);
+  --shadow-md: 0 12px 28px -12px rgba(24, 18, 15, 0.16);
+  --shadow-card-hover: 0 16px 32px -16px rgba(24, 18, 15, 0.22);
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI Variable", "Inter",
+    "Segoe UI", system-ui, Roboto, Helvetica, Arial, sans-serif;
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
 body {
   margin: 0;
-  font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  font-family: var(--font-sans);
   background: var(--paper);
   color: var(--ink);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  font-size: 15.5px;
+  line-height: 1.55;
+  -webkit-tap-highlight-color: transparent;
 }
 
+h1, h2, h3 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+/* ---------- View transition ---------- */
+/* Every render() call swaps in a fresh top-level element, so this keyframe
+   replays automatically on every navigation with no JS required. */
+main#app > div {
+  animation: view-enter 320ms var(--ease-out) both;
+}
+
+@keyframes view-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Header ---------- */
 .app-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
-  padding: 14px 24px;
-  background: linear-gradient(90deg, var(--red), #d35400);
-  color: white;
-  box-shadow: var(--shadow);
+  padding: 16px 28px;
+  background: rgba(250, 248, 245, 0.85);
+  backdrop-filter: blur(10px) saturate(1.2);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2);
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -45,37 +102,56 @@ body {
   align-items: center;
   gap: 8px;
   font-weight: 700;
-  font-size: 1.3rem;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
 }
 
 .brand-icon {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.brand-name {
+  color: var(--red);
 }
 
 .main-nav {
   display: flex;
-  gap: 8px;
+  gap: 2px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 3px;
+  border-radius: var(--radius-pill);
 }
 
 .nav-btn {
-  background: rgba(255, 255, 255, 0.15);
+  background: transparent;
   border: none;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 999px;
+  color: var(--muted);
+  padding: 7px 16px;
+  border-radius: var(--radius-pill);
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  transition: background 0.15s ease;
+  font-family: inherit;
+  transition: color 160ms var(--ease-out), background-color 160ms var(--ease-out),
+    transform 120ms var(--ease-out);
 }
 
-.nav-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
+@media (hover: hover) and (pointer: fine) {
+  .nav-btn:hover {
+    color: var(--ink);
+    background: var(--paper);
+  }
+}
+
+.nav-btn:active {
+  transform: scale(0.96);
 }
 
 .nav-btn.active {
-  background: white;
-  color: var(--red);
+  background: var(--ink);
+  color: white;
 }
 
 main#app {
@@ -83,83 +159,104 @@ main#app {
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  padding: 28px 20px 60px;
+  padding: 32px 20px 72px;
 }
 
 .app-footer {
   text-align: center;
-  padding: 16px;
+  padding: 20px;
   color: var(--muted);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
 }
 
 /* ---------- Home ---------- */
 .hero {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 28px;
-  box-shadow: var(--shadow);
-  margin-bottom: 24px;
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 32px;
 }
 
 .hero h1 {
-  margin: 0 0 8px;
-  font-size: 1.8rem;
+  font-size: 1.9rem;
+  margin: 0 0 10px;
 }
 
 .hero p {
   color: var(--muted);
-  margin: 0 0 18px;
-  line-height: 1.5;
+  margin: 0 0 22px;
+  line-height: 1.6;
+  max-width: 56ch;
 }
 
 .stat-row {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   flex-wrap: wrap;
 }
 
 .stat-box {
   background: var(--paper);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 14px 18px;
-  min-width: 120px;
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  min-width: 130px;
   text-align: center;
+  transition: border-color 160ms var(--ease-out);
 }
 
 .stat-box .num {
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   font-weight: 700;
-  color: var(--red);
+  color: var(--ink);
+  letter-spacing: -0.02em;
 }
 
 .stat-box .label {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--muted);
+  margin-top: 2px;
 }
 
 .cta-row {
   display: flex;
-  gap: 12px;
-  margin-top: 20px;
+  gap: 10px;
+  margin-top: 24px;
   flex-wrap: wrap;
 }
 
 .btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   border: none;
   cursor: pointer;
-  padding: 10px 20px;
-  border-radius: 999px;
-  font-weight: 700;
-  font-size: 0.95rem;
+  padding: 11px 22px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: transform 140ms var(--ease-out), background-color 160ms var(--ease-out),
+    box-shadow 160ms var(--ease-out), border-color 160ms var(--ease-out);
+}
+
+.btn:active {
+  transform: scale(0.97);
 }
 
 .btn-primary {
   background: var(--red);
   color: white;
+  box-shadow: 0 1px 2px rgba(193, 39, 45, 0.25);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover {
+    background: var(--red-hover);
+  }
 }
 
 .btn-secondary {
@@ -167,117 +264,176 @@ main#app {
   color: var(--ink);
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .btn-secondary:hover {
+    background: var(--yellow-hover);
+  }
+}
+
 .btn-outline {
   background: transparent;
-  border: 2px solid var(--border);
+  border: 1.5px solid var(--border-strong);
   color: var(--ink);
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .btn-outline:hover {
+    border-color: var(--ink);
+  }
+}
+
 .section-title {
-  font-size: 1.2rem;
-  margin: 28px 0 14px;
+  font-size: 1.1rem;
+  margin: 36px 0 16px;
+  letter-spacing: -0.01em;
 }
 
 /* ---------- Lesson grid ---------- */
 .lesson-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 16px;
+  gap: 14px;
 }
 
 .lesson-card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px;
-  box-shadow: var(--shadow);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out),
+    border-color 200ms var(--ease-out);
+  animation: card-in 360ms var(--ease-out) both;
 }
 
-.lesson-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(43, 35, 32, 0.14);
+.lesson-card:nth-child(1) { animation-delay: 0ms; }
+.lesson-card:nth-child(2) { animation-delay: 25ms; }
+.lesson-card:nth-child(3) { animation-delay: 50ms; }
+.lesson-card:nth-child(4) { animation-delay: 75ms; }
+.lesson-card:nth-child(5) { animation-delay: 100ms; }
+.lesson-card:nth-child(6) { animation-delay: 125ms; }
+.lesson-card:nth-child(7) { animation-delay: 150ms; }
+.lesson-card:nth-child(8) { animation-delay: 175ms; }
+.lesson-card:nth-child(n + 9) { animation-delay: 200ms; }
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lesson-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--border-strong);
+  }
+}
+
+.lesson-card:active {
+  transform: scale(0.985);
 }
 
 .lesson-card .icon {
-  font-size: 2rem;
+  font-size: 1.9rem;
 }
 
 .lesson-card h3 {
-  margin: 10px 0 4px;
-  font-size: 1.05rem;
+  margin: 12px 0 4px;
+  font-size: 1.02rem;
+  letter-spacing: -0.01em;
 }
 
 .lesson-card p {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
   color: var(--muted);
-  font-size: 0.88rem;
-  line-height: 1.4;
+  font-size: 0.86rem;
+  line-height: 1.5;
 }
 
 .progress-bar {
-  height: 8px;
+  height: 6px;
   background: var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   overflow: hidden;
 }
 
 .progress-bar-fill {
   height: 100%;
   background: var(--green);
-  border-radius: 999px;
-  transition: width 0.3s ease;
+  border-radius: var(--radius-pill);
+  transition: width 500ms var(--ease-out);
 }
 
 .progress-label {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: var(--muted);
-  margin-top: 6px;
+  margin-top: 8px;
 }
 
 /* ---------- Lesson detail ---------- */
 .back-link {
   background: none;
   border: none;
-  color: var(--red);
-  font-weight: 700;
+  color: var(--muted);
+  font-weight: 600;
   cursor: pointer;
   padding: 0;
-  margin-bottom: 16px;
-  font-size: 0.95rem;
+  margin-bottom: 20px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  transition: color 140ms var(--ease-out), transform 140ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .back-link:hover {
+    color: var(--red);
+  }
+}
+
+.back-link:active {
+  transform: translateX(-2px);
 }
 
 .lesson-header {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 8px;
+  gap: 16px;
+  margin-bottom: 12px;
 }
 
 .lesson-header .icon {
-  font-size: 2.4rem;
+  font-size: 2.2rem;
 }
 
 .mode-row {
   display: flex;
-  gap: 12px;
-  margin: 18px 0;
+  gap: 10px;
+  margin: 22px 0;
   flex-wrap: wrap;
 }
 
 .word-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   overflow: hidden;
 }
 
 .word-table th, .word-table td {
   text-align: left;
-  padding: 10px 14px;
+  padding: 11px 16px;
   border-bottom: 1px solid var(--border);
   font-size: 0.92rem;
 }
@@ -285,9 +441,20 @@ main#app {
 .word-table th {
   background: var(--paper);
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
+}
+
+.word-table tbody tr {
+  transition: background-color 140ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .word-table tbody tr:hover {
+    background: var(--paper);
+  }
 }
 
 .word-table tr:last-child td {
@@ -297,6 +464,7 @@ main#app {
 .pron {
   color: var(--muted);
   font-style: italic;
+  font-size: 0.88em;
 }
 
 /* ---------- Flashcards ---------- */
@@ -304,7 +472,7 @@ main#app {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
 }
 
 .flash-top-row {
@@ -318,7 +486,8 @@ main#app {
 
 .flash-progress {
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 .flash-deck-controls {
@@ -330,19 +499,28 @@ main#app {
   background: var(--card);
   border: 1px solid var(--border);
   color: var(--ink);
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 0.85rem;
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
   font-weight: 600;
+  font-family: inherit;
   cursor: pointer;
+  transition: border-color 160ms var(--ease-out), color 160ms var(--ease-out),
+    background-color 160ms var(--ease-out), transform 120ms var(--ease-out);
 }
 
-.btn-icon:hover {
-  border-color: var(--red);
+@media (hover: hover) and (pointer: fine) {
+  .btn-icon:hover:not(:disabled) {
+    border-color: var(--red);
+  }
+}
+
+.btn-icon:active:not(:disabled) {
+  transform: scale(0.95);
 }
 
 .btn-icon:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
@@ -350,15 +528,20 @@ main#app {
   width: 100%;
   max-width: 420px;
   height: 230px;
-  perspective: 1200px;
+  perspective: 1400px;
   cursor: pointer;
+  transition: transform 120ms var(--ease-out);
+}
+
+.flashcard:active {
+  transform: scale(0.985);
 }
 
 .flashcard-inner {
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.5s;
+  transition: transform 420ms var(--ease-in-out);
   transform-style: preserve-3d;
 }
 
@@ -370,14 +553,14 @@ main#app {
   position: absolute;
   inset: 0;
   backface-visibility: hidden;
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 20px;
   text-align: center;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-sm);
   border: 1px solid var(--border);
 }
 
@@ -386,14 +569,16 @@ main#app {
 }
 
 .flashcard-back {
-  background: var(--red);
+  background: linear-gradient(155deg, var(--red), #8f1d22);
   color: white;
+  border-color: transparent;
   transform: rotateY(180deg);
 }
 
 .flashcard-face .main-text {
-  font-size: 1.6rem;
+  font-size: 1.55rem;
   font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .flashcard-face .sub-text {
@@ -404,7 +589,7 @@ main#app {
 
 .flashcard-hint {
   color: var(--muted);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
 }
 
 .flash-audio-row {
@@ -423,21 +608,35 @@ main#app {
 /* ---------- Quiz ---------- */
 .quiz-progress {
   color: var(--muted);
-  font-size: 0.9rem;
-  margin-bottom: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 14px;
 }
 
 .quiz-question {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 22px;
-  box-shadow: var(--shadow);
+  border-radius: var(--radius-lg);
+  padding: 26px;
+  box-shadow: var(--shadow-sm);
+  animation: question-in 320ms var(--ease-out) both;
+}
+
+@keyframes question-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .quiz-question h3 {
-  margin: 0 0 18px;
-  font-size: 1.3rem;
+  margin: 0 0 20px;
+  font-size: 1.25rem;
+  line-height: 1.4;
 }
 
 .quiz-options {
@@ -447,26 +646,45 @@ main#app {
 
 .quiz-option {
   text-align: left;
-  padding: 12px 16px;
-  border-radius: 10px;
-  border: 2px solid var(--border);
-  background: white;
+  padding: 13px 18px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  background: var(--card);
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.98rem;
+  font-family: inherit;
+  color: var(--ink);
+  transition: border-color 160ms var(--ease-out), background-color 160ms var(--ease-out),
+    transform 120ms var(--ease-out);
+  animation: card-in 300ms var(--ease-out) both;
 }
 
-.quiz-option:hover {
-  border-color: var(--red);
+.quiz-option:nth-child(1) { animation-delay: 0ms; }
+.quiz-option:nth-child(2) { animation-delay: 40ms; }
+.quiz-option:nth-child(3) { animation-delay: 80ms; }
+.quiz-option:nth-child(4) { animation-delay: 120ms; }
+
+@media (hover: hover) and (pointer: fine) {
+  .quiz-option:hover:not(:disabled) {
+    border-color: var(--red);
+    background: var(--red-soft);
+  }
+}
+
+.quiz-option:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 .quiz-option.correct {
-  background: #e6f4ea;
+  background: var(--green-soft);
   border-color: var(--green);
+  color: #0f4a2e;
 }
 
 .quiz-option.incorrect {
-  background: #fdecea;
+  background: var(--red-soft);
   border-color: var(--red);
+  color: #7a1216;
 }
 
 .quiz-option:disabled {
@@ -475,38 +693,42 @@ main#app {
 
 .quiz-result {
   text-align: center;
-  padding: 30px;
+  padding: 36px;
   background: var(--card);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   border: 1px solid var(--border);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-sm);
+  animation: question-in 320ms var(--ease-out) both;
 }
 
 .quiz-result .score {
-  font-size: 2.6rem;
+  font-size: 2.4rem;
   font-weight: 800;
-  color: var(--red);
-  margin: 10px 0;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin: 12px 0;
 }
 
 .quiz-next-hint {
   min-height: 20px;
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: color 160ms var(--ease-out);
 }
 
 /* ---------- Progress page ---------- */
 .progress-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   overflow: hidden;
 }
 
 .progress-table th, .progress-table td {
-  padding: 12px 16px;
+  padding: 13px 16px;
   text-align: left;
   border-bottom: 1px solid var(--border);
   font-size: 0.92rem;
@@ -515,8 +737,20 @@ main#app {
 .progress-table th {
   background: var(--paper);
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
+  font-weight: 600;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.progress-table tbody tr {
+  transition: background-color 140ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .progress-table tbody tr:hover {
+    background: var(--paper);
+  }
 }
 
 .progress-table tr:last-child td {
@@ -526,12 +760,39 @@ main#app {
 .empty-state {
   text-align: center;
   color: var(--muted);
-  padding: 40px 20px;
+  padding: 48px 20px;
 }
 
 @media (max-width: 600px) {
   .app-header {
     justify-content: center;
     text-align: center;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  main#app > div,
+  .lesson-card,
+  .quiz-question,
+  .quiz-result,
+  .quiz-option {
+    animation: none !important;
+  }
+
+  .flashcard-inner {
+    transition-duration: 1ms;
+  }
+
+  .lesson-card:hover,
+  .lesson-card:active,
+  .btn:active,
+  .nav-btn:active,
+  .back-link:active,
+  .back-link:hover,
+  .btn-icon:active,
+  .flashcard:active,
+  .quiz-option:active {
+    transform: none !important;
   }
 }
