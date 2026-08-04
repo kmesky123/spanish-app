@@ -1,12 +1,13 @@
 // Beginner Spanish curriculum data.
-// Each lesson has an id, title, emoji icon, short description, and a word/phrase list.
+// Each lesson has an id, title, an icon (SVG markup referencing a symbol in index.html's
+// sprite), short description, and a word/phrase list.
 // `pron` is a simplified, non-IPA pronunciation hint aimed at English speakers.
 
 const LESSONS = [
   {
     id: "greetings",
     title: "Greetings & Courtesy",
-    icon: "👋",
+    icon: "<svg class=\"icon-svg\" aria-hidden=\"true\"><use href=\"#icon-wave\"></use></svg>",
     description: "Say hello, goodbye, and be polite.",
     words: [
       { es: "Hola", en: "Hello", pron: "OH-lah" },
@@ -29,7 +30,7 @@ const LESSONS = [
   {
     id: "numbers",
     title: "Numbers 0-20",
-    icon: "🔢",
+    icon: "<svg class=\"icon-svg\" aria-hidden=\"true\"><use href=\"#icon-numbers\"></use></svg>",
     description: "Count from zero to twenty.",
     words: [
       { es: "cero", en: "zero", pron: "SEH-roh" },
@@ -58,7 +59,7 @@ const LESSONS = [
   {
     id: "numbers-20-40",
     title: "Numbers 20-40",
-    icon: "🧮",
+    icon: "<svg class=\"icon-svg\" aria-hidden=\"true\"><use href=\"#icon-numbers\"></use></svg>",
     description: "Count from twenty to forty.",
     words: [
       { es: "veinte", en: "twenty", pron: "VAIN-teh" },
@@ -87,7 +88,7 @@ const LESSONS = [
   {
     id: "numbers-40-60",
     title: "Numbers 40-60",
-    icon: "🔟",
+    icon: "<svg class=\"icon-svg\" aria-hidden=\"true\"><use href=\"#icon-numbers\"></use></svg>",
     description: "Count from forty to sixty.",
     words: [
       { es: "cuarenta", en: "forty", pron: "kwah-REHN-tah" },
@@ -116,7 +117,7 @@ const LESSONS = [
   {
     id: "numbers-60-80",
     title: "Numbers 60-80",
-    icon: "📊",
+    icon: "<svg class=\"icon-svg\" aria-hidden=\"true\"><use href=\"#icon-numbers\"></use></svg>",
     description: "Count from sixty to eighty.",
     words: [
       { es: "sesenta", en: "sixty", pron: "seh-SEHN-tah" },
@@ -145,7 +146,7 @@ const LESSONS = [
   {
     id: "numbers-80-100",
     title: "Numbers 80-100",
-    icon: "💯",
+    icon: "<svg class=\"icon-svg\" aria-hidden=\"true\"><use href=\"#icon-numbers\"></use></svg>",
     description: "Count from eighty to one hundred.",
     words: [
       { es: "ochenta", en: "eighty", pron: "oh-CHEHN-tah" },
@@ -174,7 +175,7 @@ const LESSONS = [
   {
     id: "colors",
     title: "Colors",
-    icon: "🎨",
+    icon: "<svg class=\"icon-svg\" aria-hidden=\"true\"><use href=\"#icon-palette\"></use></svg>",
     description: "Describe the world around you.",
     words: [
       { es: "rojo", en: "red", pron: "ROH-hoh" },
@@ -193,7 +194,7 @@ const LESSONS = [
   {
     id: "days",
     title: "Days & Months",
-    icon: "📅",
+    icon: "<svg class=\"icon-svg\" aria-hidden=\"true\"><use href=\"#icon-calendar\"></use></svg>",
     description: "Talk about the calendar.",
     words: [
       { es: "lunes", en: "Monday", pron: "LOO-nehs" },
@@ -225,7 +226,7 @@ const LESSONS = [
   {
     id: "family",
     title: "Family",
-    icon: "👪",
+    icon: "<svg class=\"icon-svg\" aria-hidden=\"true\"><use href=\"#icon-family\"></use></svg>",
     description: "Meet the family members.",
     words: [
       { es: "la familia", en: "the family", pron: "lah fah-MEE-lyah" },
@@ -253,7 +254,7 @@ const LESSONS = [
   {
     id: "home-neighbors",
     title: "Home & Neighbors",
-    icon: "🏘️",
+    icon: "<svg class=\"icon-svg\" aria-hidden=\"true\"><use href=\"#icon-house\"></use></svg>",
     description: "Talk about where you live and who's nearby.",
     words: [
       { es: "el vecino", en: "neighbor (male)", pron: "el veh-SEE-noh" },
@@ -272,7 +273,7 @@ const LESSONS = [
   {
     id: "questions",
     title: "Common Questions",
-    icon: "❓",
+    icon: "<svg class=\"icon-svg\" aria-hidden=\"true\"><use href=\"#icon-question\"></use></svg>",
     description: "Ask about names, origin, and more.",
     words: [
       { es: "¿Cómo te llamas?", en: "What is your name?", pron: "KOH-moh teh YAH-mahs" },
@@ -290,7 +291,7 @@ const LESSONS = [
   {
     id: "food",
     title: "Food & Drink",
-    icon: "🍽️",
+    icon: "<svg class=\"icon-svg\" aria-hidden=\"true\"><use href=\"#icon-food\"></use></svg>",
     description: "Order and talk about meals.",
     words: [
       { es: "el agua", en: "water", pron: "el AH-gwah" },
@@ -312,7 +313,7 @@ const LESSONS = [
   {
     id: "kitchen",
     title: "Kitchen",
-    icon: "🍳",
+    icon: "<svg class=\"icon-svg\" aria-hidden=\"true\"><use href=\"#icon-kitchen\"></use></svg>",
     description: "Name everything you'll find in the kitchen.",
     words: [
       { es: "la cocina", en: "the kitchen", pron: "lah koh-SEE-nah" },
@@ -362,7 +363,7 @@ const LESSONS = [
   {
     id: "verbs",
     title: "Ser vs. Estar",
-    icon: "🔤",
+    icon: "<svg class=\"icon-svg\" aria-hidden=\"true\"><use href=\"#icon-verbs\"></use></svg>",
     description: "The two verbs for 'to be' (present tense).",
     words: [
       { es: "yo soy", en: "I am (ser - identity)", pron: "yoh soy" },
