@@ -681,6 +681,10 @@ main#app {
   transform: rotateY(180deg);
 }
 
+.flashcard.no-anim .flashcard-inner {
+  transition: none;
+}
+
 .flashcard-face {
   position: absolute;
   inset: 0;

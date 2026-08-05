@@ -290,7 +290,12 @@ function renderFlashcards(lessonId) {
 
   function showCard() {
     flipped = false;
+    // Reset to the front instantly (no animated un-flip) so the back face
+    // never becomes the visible face mid-transition when swapping cards.
+    card.classList.add("no-anim");
     card.classList.remove("flipped");
+    void card.offsetWidth;
+    card.classList.remove("no-anim");
     const w = deck[index];
     frontText.textContent = w.en;
     backText.textContent = w.es;
